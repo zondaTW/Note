@@ -8,83 +8,83 @@
 
 ## Pre Install   
 首先開機後進到，選擇`Boot Arch Linux (x86_64)`  
-![picture](picture/ArchLinuxBoot.JPG)  
+![picture](picture/install/ArchLinuxBoot.JPG)  
 接來下開始載入  
-![picture](picture/ArchLinuxBooting.JPG)  
+![picture](picture/install/ArchLinuxBooting.JPG)  
 直到這畫面  
-![picture](picture/ArchLinuxBootComplete.JPG)   
+![picture](picture/install/ArchLinuxBootComplete.JPG)   
 
 ### Verify the boot mode  
 `ls /sys/firmware/efi/efivars`  
 輸入後，回應跟我一樣的話，代表為BIOS(Legacy)  
-![picture](picture/VerifyTheBootMode.JPG)  
+![picture](picture/install/VerifyTheBootMode.JPG)  
 
 ### Connect to the Internet  
 `dhcpcd`  
 `ping archlinux.org`  
 測試網路，出現下面畫面代表有網路  
-![picture](picture/ping.JPG)  
+![picture](picture/install/ping.JPG)  
 
 ### Update the system clock  
 `timedatectl set-ntp true`  
 `timedatectl status`  
-![picture](picture/timedatectl.JPG)  
+![picture](picture/install/timedatectl.JPG)  
 
 ### Partition the disks  
 `fdisk -l`  
-![picture](picture/disk.JPG)  
+![picture](picture/install/disk.JPG)  
 `fdisk /dev/sda`  
 因為我是要對sda做分割，這邊要依造當下情況決定，以及因為我是BIOS(Legacy)的關係，我不用割GPT(UEFI 才需要做，有看到資料說可以混用)，但我要先創一個MBR，指令為`o`  
-![picture](picture/diskMBR.JPG)  
+![picture](picture/install/diskMBR.JPG)  
 可以下`p`做查看  
-![picture](picture/diskMBRCheck.JPG)  
+![picture](picture/install/diskMBRCheck.JPG)  
 接下來可以下`n`，做分割磁區  
-![picture](picture/disksda1.JPG)  
+![picture](picture/install/disksda1.JPG)  
 接下來我切成這樣，切好後，下`w`寫入離開即完成分割  
-![picture](picture/diskComplete.JPG)  
-![picture](picture/diskNew.JPG)  
+![picture](picture/install/diskComplete.JPG)  
+![picture](picture/install/diskNew.JPG)  
 
 ### Format the partitions  
 `mkfs.ext4 /dev/sda1`  
 `mkfs.ext4 /dev/sda2`  
 格式化剛剛分割的空間  
-![picture](picture/FormatPartition.JPG)  
+![picture](picture/install/FormatPartition.JPG)  
 `mkswap /dev/sda3`  
 `swapon /dev/sda3`  
 設sda3為swap空間  
-![picture](picture/SwapPartition.JPG)  
+![picture](picture/install/SwapPartition.JPG)  
 
 ### Mount the file systems  
 `mount /dev/sda1 /mnt`  
 `mkdir /mnt/home`  
 `mount /dev/sda2 /mnt/home`  
 mount後，可以用`lsblk`查看狀況  
-![picture](picture/mountLsblk.JPG)  
+![picture](picture/install/mountLsblk.JPG)  
 
 ## Installation  
 
 ### Select the mirrors  
 `vim /etc/pacman.d/mirrorlist` 
 找到Taiwan後，將那2行移到最上面(善用`d2d` `p`)  
-![picture](picture/mirrors.JPG)  
+![picture](picture/install/mirrors.JPG)  
 
 ### Install the base packages  
 `pacstrap /mnt base base-devel`  
-![picture](picture/InstallBasePackage.JPG)  
+![picture](picture/install/InstallBasePackage.JPG)  
 
 ### Fstab  
 `genfstab -U /mnt >> /mnt/etc/fstab`  
 `/mnt/etc/fstab`  
-![picture](picture/fstab.JPG)  
+![picture](picture/install/fstab.JPG)  
 
 ### Chroot  
 `arch-chroot /mnt`  
-![picture](picture/chroot.JPG)  
+![picture](picture/install/chroot.JPG)  
 
 ### Time zone  
 `ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime`  
 `hwclock --systohc`  
-![picture](picture/timezone.JPG)  
+![picture](picture/install/timezone.JPG)  
 
 ### Locale  
 `vim /etc/locale.gen`  
@@ -94,9 +94,9 @@ mount後，可以用`lsblk`查看狀況
 + `zh_TW.UTF-8 UTF-8`  
 
 (可能會出現找不到vim，如果出現的話以`pacman -S vim`做安裝)  
-![picture](picture/localefile.JPG)  
+![picture](picture/install/localefile.JPG)  
 `locale-gen`  
-![picture](picture/locale.JPG)  
+![picture](picture/install/locale.JPG)  
 `/etc/locale.conf`  
 檔案是不存在的，在裡面輸入`LANG=en_US.UTF-8`  
 
@@ -105,28 +105,28 @@ mount後，可以用`lsblk`查看狀況
 檔案是不存在的，在裡面輸入你想要的主機名稱  
 `vim /etc/hosts`
 將`myhostname`換成自己的名稱  
-![picture](picture/hosts.JPG)  
+![picture](picture/install/hosts.JPG)  
 
 ### Root password  
 `passwd`  
-![picture](picture/passwd.JPG)  
+![picture](picture/install/passwd.JPG)  
 
 ### Initramfs  
 `mkinitcpio -p linux`  
-![picture](picture/mkinitcpio.JPG)  
+![picture](picture/install/mkinitcpio.JPG)  
 
 ### Boot Loader
 `pacman -S grub`  
 `grub-install --target=i386-pc /dev/sda`  
 注意此`/dev/sda`，要根據你的ArchLinux灌在哪  
 `grub-mkconfig -o /boot/grub/grub.cfg`  
-![picture](picture/grubinstall.JPG)  
-![picture](picture/grubmkconfig.JPG)  
+![picture](picture/install/grubinstall.JPG)  
+![picture](picture/install/grubmkconfig.JPG)  
 
 ### Reboot  
 `exit`  
 `reboot`  
-![picture](picture/reboot.JPG)  
+![picture](picture/install/reboot.JPG)  
 
 
 
