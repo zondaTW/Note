@@ -2,7 +2,7 @@
 
 ## User
 `useradd -m username`  
--m代表建立家目錄
+-m代表建立家目錄  
 ![picture](picture/base/user.JPG)  
 
 ## sudo

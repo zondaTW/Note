@@ -37,14 +37,17 @@ project.wsgi: Django project中的wsgi.py路徑
 
 ```
 [uwsgi]
-socket = 127.0.0.1:8000
-chdir = /home/zonda/nicetomeetyou/NBA_Crawler_Web/nba_crawler_web/
+proj_dir = /home/zonda/nicetomeetyou
+web_dir = %(proj_dir)/NBA_Crawler_Web
+#socket = 127.0.0.1:8000 # tcp
+socket = %(web_dir)/uwsgi_config/nba_crawler_web.sock # unix sock
+chdir = %(web_dir)/nba_crawler_web/
 module = nba_crawler_web.wsgi
 processes = 4
 threads = 2
 pidfile = uwsgi.pid
 daemonize = uwsgi.log
-home = /home/zonda/nicetomeetyou/nice_to_meet_you_Env/
+home = %(proj_dir)/nice_to_meet_you_Env/
 ```
 socket: ip:port  
 chdir: project path  
@@ -62,6 +65,7 @@ stop ini: `uwsgi --stop uwsgi.pid`
 
 `sudo vim /etc/nginx/nginx.conf`  
 
+### TCP
 ```
 server {
     listen      80;
@@ -71,6 +75,24 @@ server {
     location / {
         include uwsgi_params;
         uwsgi_pass 127.0.0.1:8000;
+    }
+}
+```
+
+### Unix Sock
+```
+upstream app {
+    server unidx://home/zonda/nicetomeetyou/NBA_Crawler_Web/uwsgi_config/nba_crawler_web.sock;
+}
+
+server {
+    listen      80;
+    server_name [server ip];
+    charset     utf-8;
+    
+    location / {
+        include uwsgi_params;
+        uwsgi_pass app;
     }
 }
 ```
