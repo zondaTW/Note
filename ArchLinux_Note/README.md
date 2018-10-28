@@ -138,3 +138,7 @@ mount後，可以用`lsblk`查看狀況
 [Linux Fdisk 磁碟分割及格式化](https://www.phpini.com/linux/linux-fdisk-create-format-partitions)  
 [Linux 系統 Swap 交換空間管理教學：Swap 分割區與檔案的使用與管理](https://blog.gtwang.org/linux/linux-swap-space-tutorial/)  
 [Linux 檔案系統掛載（mount）使用教學與範例](https://blog.gtwang.org/linux/linux-mount/)  
+[萌妹子都能看懂的VMware Workstation安装Arch Linux和Cinnamon桌面教程](https://acris.me/2017/03/20/How-to-install-Arch-Linux-with-Cinnamon-desktop-on-VMware-Workstation/)  
+[Arch Linux Installation and Configuration on UEFI Machines](https://www.tecmint.com/arch-linux-installation-and-configuration-guide/)  
+[7 Essential Things To Do After Installing Arch Linu](https://itsfoss.com/things-to-do-after-installing-arch-linux/)  
+[Yaourt is Dead! Use These Alternatives for AUR in Arch Linux](https://itsfoss.com/best-aur-helpers/)  
