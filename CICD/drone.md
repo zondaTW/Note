@@ -4,7 +4,7 @@
 因為git server選用go語言開發的gitea，而drone也是用go語言開發的，就選用他了。  
 
 # Setup
-採用docker-compose的方式建立。  
+採用 docker-compose 的方式建立。  
 ```yml
 version: '2'
 
@@ -42,9 +42,34 @@ services:
 網址: https://localhost:8080  
 連上後，會看到:  
 <img src="picture/drone/login.PNG" width="480">  
-輸入你的gitea上的帳密，就會看到:  
+輸入你的 gitea 上的帳密，就會看到:  
 <img src="picture/drone/drone_repo.PNG" width="480">  
 就可以開始玩看看摟~
+
+# Start
+將你要的 repository 打開  
+<img src="picture/drone/repo_open.PNG" width="480">  
+並點選右上角的 settings 設定:  
+<img src="picture/drone/repo_settings.PNG" width="480">  
+
+將 .drone.yml 放在專案的根目錄，範例如下 (因為只是要測試能不能動，所以只讓他 echo 一串字):
+```yml
+pipeline:
+  backend:
+    image: golang
+    commands:
+      - echo "backend testing"
+```
+
+再來 push 一個 commit 他就會開始瞜  
+<img src="picture/drone/ci_start.PNG" width="480">  
+<img src="picture/drone/ci_running.PNG" width="480">  
+
+完成後 (因為 .drone.yml 中的 image 我還沒pull下來，所以會跑有點久)  
+<img src="picture/drone/ci_finish.PNG" width="480">  
+<img src="picture/drone/ci_backend_finish.PNG" width="480">  
+
+
 
 
 # Reference
