@@ -76,3 +76,4 @@ pipeline:
 [drone doc](http://docs.drone.io/)  
 [drone github](https://github.com/drone/drone)  
 [setting up continuous delivery with drone](https://drailing.net/2018/02/setting-up-continuous-delivery-with-drone/)  
+[使用 Docker & Drone 建立簡易自動部署流程 — Part1](https://medium.com/@stu60610/使用-docker-drone-建立簡易自動部署流程-part1-a180eb48ff37)  
